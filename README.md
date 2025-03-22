@@ -89,4 +89,5 @@ Le code source du back-end est organisé dans le package racine com.giveandgo.as
     Maven : Gestion des dépendances et construction du projet.
 **Comment lancé le projet**
 
-    Assure toi de lancé le serveur de bases donées postgreSQL (version 17) et d'avoir crée une base de donéees nommée "association_db". Puis lancé l'application Spring à l'aide de la commande : ./mvnw spring-boot:run
+    Assure toi de lancé le serveur de bases donées postgreSQL (version 17) et d'avoir crée une base de donéees nommée "association_db". 
+    Puis lancé l'application Spring à l'aide de la commande : ./mvnw spring-boot:run
