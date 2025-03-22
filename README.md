@@ -1,5 +1,5 @@
-Association - Back-End
-Aperçu du Projet
+**Association - Back-End**
+**Aperçu du Projet**
 
 Ce projet est le back-end d'une application web développée dans le cadre du cours "Application Web" à l'ENSEEIHT (S8, 2024-2025). L'application "Association" permet de gérer une association à travers diverses fonctionnalités, telles que la gestion des utilisateurs, des missions, des dons, des discussions et des participations. Le back-end est construit avec Spring Boot et utilise PostgreSQL 17 comme base de données.
 
@@ -80,15 +80,12 @@ Le code source du back-end est organisé dans le package racine com.giveandgo.as
         application.properties : Fichier de configuration principal pour Spring Boot, incluant les paramètres de la base de données PostgreSQL (URL, utilisateur, mot de passe, etc.).
         (Optionnel) data.sql ou schema.sql : Scripts SQL pour initialiser la base de données (si spring.jpa.hibernate.ddl-auto n'est pas utilisé pour créer le schéma).
 
-Technologies Utilisées
+**Technologies Utilisées**
 
     Spring Boot 3.4.3 : Framework principal pour le développement du back-end.
     Spring Data JPA : Pour l'accès aux données et la gestion des entités.
     PostgreSQL 17 : Base de données relationnelle.
     Hibernate : ORM pour mapper les entités Java aux tables de la base de données.
     Maven : Gestion des dépendances et construction du projet.
-
-Remarques
-
-    Le projet a été migré de MySQL vers PostgreSQL 17. Les entités et les requêtes ont été ajustées pour être compatibles avec PostgreSQL (par exemple, gestion des énumérations comme CategorieMission avec un type ENUM PostgreSQL).
-    Les relations entre entités (comme @ManyToOne et @OneToMany) sont définies dans les classes du package model et gérées par Hibernate.
+**Comment lancé le projet**
+Assure toi de lancé le serveur de bases donées postgreSQL (version 17) et d'avoir crée une base de donéees nommée "association_db". Puis lancé l'application Spring à l'aide de la commande : ./mvnw spring-boot:run
