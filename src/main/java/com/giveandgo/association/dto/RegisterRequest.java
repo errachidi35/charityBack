@@ -10,5 +10,4 @@ public class RegisterRequest {
     private String motDePasse;
     private String adresse;
     private String telephone;
-    private String role;
 }

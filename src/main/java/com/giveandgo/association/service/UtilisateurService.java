@@ -1,5 +1,7 @@
 package com.giveandgo.association.service;
 
+import com.giveandgo.association.dto.LoginRequest;
+import com.giveandgo.association.dto.LoginResponse;
 import com.giveandgo.association.dto.RegisterRequest;
 import com.giveandgo.association.model.Benevole;
 import com.giveandgo.association.model.Utilisateur;
@@ -65,11 +67,6 @@ public class UtilisateurService {
     }
 
     public Benevole registerUser(RegisterRequest request) {
-        // Validate role (only BENEVOLE is allowed for registration via the website)
-        if (!"BENEVOLE".equals(request.getRole())) {
-            throw new IllegalArgumentException("Autorisation refusée : Seuls les BENEVOLES sont autorisés à s'inscrire via le site web.");
-        }
-
         // Create a new Benevole entity
         Benevole benevole = new Benevole();
         benevole.setNom(request.getNom());
@@ -78,11 +75,32 @@ public class UtilisateurService {
         benevole.setMotDePasse(passwordEncoder.encode(request.getMotDePasse())); // Encode the password
         benevole.setAdresse(request.getAdresse());
         benevole.setTelephone(request.getTelephone());
+        benevole.setCompetences("");
+        benevole.setHeuresContribuees(0.0f);
         benevole.setRole("BENEVOLE");
         benevole.setEnabled(true);
         benevole.setAccountLocked(false);
 
         // Save the user to the database
         return utilisateurRepository.save(benevole);
+    }
+
+
+    public LoginResponse login(LoginRequest request) {
+        // Rechercher l'utilisateur par email
+        Utilisateur utilisateur = utilisateurRepository.findByEmail(request.getEmail());
+        if (utilisateur == null) {
+            System.out.println("Utilisateur non trouvé avec l'email : " + request.getEmail());
+            return new LoginResponse(null, "Utilisateur non trouvé avec l'email : " + request.getEmail());
+        }
+
+        // Vérifier le mot de passe
+        if (!passwordEncoder.matches(request.getMotDePasse(), utilisateur.getMotDePasse())) {
+            System.out.println("Mot de passe incorrect");
+            return new LoginResponse(null, "Mot de passe incorrect");
+        }
+
+        // Retourner une réponse de succès
+        return new LoginResponse(utilisateur.getId(), "Connexion réussie");
     }
 }

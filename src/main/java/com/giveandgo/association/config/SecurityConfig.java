@@ -37,7 +37,7 @@ public class SecurityConfig {
         http
             .cors(cors -> cors.configurationSource(request -> {
                 CorsConfiguration config = new CorsConfiguration();
-                config.setAllowedOrigins(Arrays.asList("http://localhost:8080"));
+                // config.setAllowedOrigins(Arrays.asList("http://localhost:8080"));
                 config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                 config.setAllowedHeaders(Arrays.asList("*"));
                 config.setAllowCredentials(true);
@@ -48,8 +48,8 @@ public class SecurityConfig {
             .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(auth -> auth
                 // Endpoints publics
-                .requestMatchers("/api/auth/login", "/api/auth/register").permitAll()
-                .requestMatchers("/api/missions", "/api/missions/**").permitAll()
+                .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("/api/missions", "/api/missions/{id}").permitAll()
                 // Endpoints protégés
                 .requestMatchers("/api/participations/**").hasAnyRole("BENEVOLE", "MEMBRE", "ADMIN")
                 .requestMatchers("/api/discussions/**").hasAnyRole("BENEVOLE", "MEMBRE", "ADMIN")
