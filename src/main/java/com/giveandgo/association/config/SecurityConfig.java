@@ -1,6 +1,7 @@
 package com.giveandgo.association.config;
 
 import com.giveandgo.association.security.CustomUserDetailsService;
+import com.giveandgo.association.security.JwtRequestFilter;
 
 import java.util.Arrays;
 
@@ -14,6 +15,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 
 @Configuration
@@ -25,6 +27,9 @@ public class SecurityConfig {
 
     @Autowired
     private PasswordEncoder passwordEncoder; // Injecte le bean défini dans PasswordEncoderConfig
+
+    @Autowired
+    private JwtRequestFilter jwtRequestFilter;
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -62,7 +67,8 @@ public class SecurityConfig {
                 .requestMatchers("/api/dons", "/api/dons/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
             )
-            .httpBasic(httpBasic -> {});
+            .httpBasic(httpBasic -> {})
+            .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 }

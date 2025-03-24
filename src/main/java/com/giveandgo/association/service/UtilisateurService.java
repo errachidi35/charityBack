@@ -2,11 +2,18 @@ package com.giveandgo.association.service;
 
 import com.giveandgo.association.dto.LoginRequest;
 import com.giveandgo.association.dto.LoginResponse;
+import com.giveandgo.association.dto.MembreRegisterRequest;
 import com.giveandgo.association.dto.RegisterRequest;
 import com.giveandgo.association.model.Benevole;
+import com.giveandgo.association.model.Membre;
 import com.giveandgo.association.model.Utilisateur;
+import com.giveandgo.association.repository.MembreRepository;
 import com.giveandgo.association.repository.UtilisateurRepository;
+import com.giveandgo.association.security.JwtUtil;
+
 import jakarta.validation.Validator;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +26,10 @@ public class UtilisateurService {
     private final UtilisateurRepository utilisateurRepository;
     private final PasswordEncoder passwordEncoder;
     private final Validator validator; // Pour valider les contraintes
+    @Autowired
+    private MembreRepository membreRepository;
+    @Autowired
+    private JwtUtil jwtUtil;
 
     public UtilisateurService(UtilisateurRepository utilisateurRepository, PasswordEncoder passwordEncoder, Validator validator) {
         this.utilisateurRepository = utilisateurRepository;
@@ -91,16 +102,35 @@ public class UtilisateurService {
         Utilisateur utilisateur = utilisateurRepository.findByEmail(request.getEmail());
         if (utilisateur == null) {
             System.out.println("Utilisateur non trouvé avec l'email : " + request.getEmail());
-            return new LoginResponse(null, "Utilisateur non trouvé avec l'email : " + request.getEmail());
+            return new LoginResponse(null, "Utilisateur non trouvé avec l'email : " + request.getEmail(), "");
         }
 
         // Vérifier le mot de passe
         if (!passwordEncoder.matches(request.getMotDePasse(), utilisateur.getMotDePasse())) {
             System.out.println("Mot de passe incorrect");
-            return new LoginResponse(null, "Mot de passe incorrect");
+            return new LoginResponse(null, "Mot de passe incorrect", "");
         }
 
+        // Déterminer le rôle en fonction du type d'utilisateur
+        String role = utilisateur.getClass().getSimpleName().toUpperCase(); // ADMIN, MEMBRE, BENEVOLE
+        String token = jwtUtil.generateToken(utilisateur.getEmail(), role);
+
         // Retourner une réponse de succès
-        return new LoginResponse(utilisateur.getId(), "Connexion réussie");
+        return new LoginResponse(utilisateur.getId(), "Connexion réussie", token);
+    }
+
+
+    public Membre createMembreByAdmin(MembreRegisterRequest request) {
+
+        // Créer un nouveau membre
+        Membre membre = new Membre(); // Create a new Membre entity et le role est MEMBRE par défaut
+        membre.setNom(request.getNom());
+        membre.setPrenom(request.getPrenom());
+        membre.setEmail(request.getEmail());
+        membre.setMotDePasse(passwordEncoder.encode(request.getMotDePasse()));
+        membre.setAdresse(request.getAdresse());
+        membre.setTelephone(request.getTelephone());
+
+        return membreRepository.save(membre);
     }
 }

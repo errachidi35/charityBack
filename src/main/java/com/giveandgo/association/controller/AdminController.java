@@ -1,7 +1,15 @@
 package com.giveandgo.association.controller;
 
+import com.giveandgo.association.dto.MembreRegisterRequest;
+import com.giveandgo.association.dto.RegisterRequest;
 import com.giveandgo.association.model.Admin;
+import com.giveandgo.association.model.Membre;
 import com.giveandgo.association.service.AdminService;
+import com.giveandgo.association.service.UtilisateurService;
+
+import jakarta.annotation.PostConstruct;
+import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +22,9 @@ import java.util.Optional;
 public class AdminController {
     @Autowired
     private AdminService adminService;
+
+    @Autowired
+    private UtilisateurService utilisateurService;
 
     @PostMapping
     public Admin createAdmin(@RequestBody Admin admin) {
@@ -35,5 +46,18 @@ public class AdminController {
     public ResponseEntity<Void> deleteAdmin(@PathVariable Long id) {
         adminService.deleteAdmin(id);
         return ResponseEntity.ok().build();
+    }
+
+    // @PostConstruct
+    // void populate() {
+    //     Admin admin = new Admin("admin@association.com", "$2a$10$xJcBZ6wU8lFD5OSO7UUzF.iFbi6ajGhWFJbGa2u6Jex4P.EP0k2rm", "SAMI", "Amine");
+    //     adminService.createAdmin(admin);
+    // }
+
+
+    @PostMapping("/membres")
+    public ResponseEntity<Membre> createMembre(@Valid @RequestBody MembreRegisterRequest request) {
+        Membre membre = utilisateurService.createMembreByAdmin(request);
+        return ResponseEntity.ok(membre);
     }
 }

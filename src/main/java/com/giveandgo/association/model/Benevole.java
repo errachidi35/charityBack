@@ -27,28 +27,4 @@ public class Benevole extends Utilisateur {
         this.heuresContribuees = heuresContribuees;
         this.competences = competences;
     }
-
-    public Float getHeuresContribuees() {
-        return heuresContribuees;
-    }
-
-    public void setHeuresContribuees(Float heuresContribuees) {
-        this.heuresContribuees = heuresContribuees;
-    }
-
-    public String getCompetences() {
-        return competences;
-    }
-
-    public void setCompetences(String competences) {
-        this.competences = competences;
-    }
-
-    public List<Participation> getParticipations() {
-        return participations;
-    }
-
-    public void setParticipations(List<Participation> participations) {
-        this.participations = participations;
-    }
 }

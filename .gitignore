@@ -31,3 +31,12 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Ignore les fichiers des notes
+*.txt
+
+
+### Ignore le fichier d'env
+.env.local
+
+

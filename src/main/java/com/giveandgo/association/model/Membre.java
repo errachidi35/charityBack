@@ -30,36 +30,4 @@ public class Membre extends Utilisateur {
         this.domaine = domaine;
         this.dateInscription = LocalDate.now();
     }
-
-    public String getRoleUtilisateur() {
-        return roleUtilisateur;
-    }
-
-    public void setRoleUtilisateur(String roleUtilisateur) {
-        this.roleUtilisateur = roleUtilisateur;
-    }
-
-    public String getDomaine() {
-        return domaine;
-    }
-
-    public void setDomaine(String domaine) {
-        this.domaine = domaine;
-    }
-
-    public LocalDate getDateInscription() {
-        return dateInscription;
-    }
-
-    public void setDateInscription(LocalDate dateInscription) {
-        this.dateInscription = dateInscription;
-    }
-
-    public List<Mission> getMissions() {
-        return missions;
-    }
-
-    public void setMissions(List<Mission> missions) {
-        this.missions = missions;
-    }
 }

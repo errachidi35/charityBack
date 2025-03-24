@@ -34,48 +34,4 @@ public class Don {
         this.date = LocalDate.now();
         this.moyenPaiement = moyenPaiement;
     }
-
-    public Long getId() {
-        return id;
-    }
-
-    public Mission getMission() {
-        return mission;
-    }
-
-    public void setMission(Mission mission) {
-        this.mission = mission;
-    }
-
-    public String getNomDonateur() {
-        return nomDonateur;
-    }
-
-    public void setNomDonateur(String nomDonateur) {
-        this.nomDonateur = nomDonateur;
-    }
-
-    public Double getMontant() {
-        return montant;
-    }
-
-    public void setMontant(Double montant) {
-        this.montant = montant;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public String getMoyenPaiement() {
-        return moyenPaiement;
-    }
-
-    public void setMoyenPaiement(String moyenPaiement) {
-        this.moyenPaiement = moyenPaiement;
-    }
 }
