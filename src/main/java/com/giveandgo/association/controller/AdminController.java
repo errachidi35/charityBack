@@ -1,9 +1,8 @@
 package com.giveandgo.association.controller;
 
 import com.giveandgo.association.dto.MembreRegisterRequest;
-import com.giveandgo.association.dto.RegisterRequest;
-import com.giveandgo.association.model.Admin;
-import com.giveandgo.association.model.Membre;
+import com.giveandgo.association.entities.Admin;
+import com.giveandgo.association.entities.Membre;
 import com.giveandgo.association.service.AdminService;
 import com.giveandgo.association.service.UtilisateurService;
 

@@ -1,6 +1,6 @@
 package com.giveandgo.association.controller;
 
-import com.giveandgo.association.model.Message;
+import com.giveandgo.association.entities.Message;
 import com.giveandgo.association.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

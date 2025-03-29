@@ -1,6 +1,6 @@
 package com.giveandgo.association.controller;
 
-import com.giveandgo.association.model.Discussion;
+import com.giveandgo.association.entities.Discussion;
 import com.giveandgo.association.service.DiscussionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

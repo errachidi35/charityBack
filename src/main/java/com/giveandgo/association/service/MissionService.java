@@ -1,6 +1,6 @@
 package com.giveandgo.association.service;
 
-import com.giveandgo.association.model.Mission;
+import com.giveandgo.association.entities.Mission;
 import com.giveandgo.association.repository.MissionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

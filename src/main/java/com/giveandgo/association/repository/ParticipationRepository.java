@@ -1,6 +1,6 @@
 package com.giveandgo.association.repository;
 
-import com.giveandgo.association.model.Participation;
+import com.giveandgo.association.entities.Participation;
 
 import java.util.List;
 

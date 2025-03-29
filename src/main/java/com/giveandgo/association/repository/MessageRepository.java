@@ -1,6 +1,6 @@
 package com.giveandgo.association.repository;
 
-import com.giveandgo.association.model.Message;
+import com.giveandgo.association.entities.Message;
 
 import java.util.List;
 

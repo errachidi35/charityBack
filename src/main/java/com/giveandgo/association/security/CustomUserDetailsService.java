@@ -1,6 +1,6 @@
 package com.giveandgo.association.security;
 
-import com.giveandgo.association.model.Utilisateur;
+import com.giveandgo.association.entities.Utilisateur;
 import com.giveandgo.association.service.UtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;

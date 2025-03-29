@@ -1,6 +1,6 @@
 package com.giveandgo.association.controller;
 
-import com.giveandgo.association.model.Don;
+import com.giveandgo.association.entities.Don;
 import com.giveandgo.association.service.DonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

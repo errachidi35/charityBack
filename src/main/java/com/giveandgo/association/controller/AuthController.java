@@ -3,7 +3,7 @@ package com.giveandgo.association.controller;
 import com.giveandgo.association.dto.LoginRequest;
 import com.giveandgo.association.dto.LoginResponse;
 import com.giveandgo.association.dto.RegisterRequest;
-import com.giveandgo.association.model.Benevole;
+import com.giveandgo.association.entities.Benevole;
 import com.giveandgo.association.service.UtilisateurService;
 
 import jakarta.validation.Valid;

@@ -1,4 +1,4 @@
-package com.giveandgo.association.model;
+package com.giveandgo.association.entities;
 
 public enum CategorieMission {
     DISALIMENT,

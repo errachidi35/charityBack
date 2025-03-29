@@ -1,8 +1,8 @@
 package com.giveandgo.association.service;
 
 import com.giveandgo.association.dto.DonRequest;
-import com.giveandgo.association.model.Don;
-import com.giveandgo.association.model.Mission;
+import com.giveandgo.association.entities.Don;
+import com.giveandgo.association.entities.Mission;
 import com.giveandgo.association.repository.DonRepository;
 import com.giveandgo.association.repository.MissionRepository;
 

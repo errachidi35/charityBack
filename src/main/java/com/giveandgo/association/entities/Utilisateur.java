@@ -1,5 +1,6 @@
-package com.giveandgo.association.model;
+package com.giveandgo.association.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -37,6 +38,7 @@ public abstract class Utilisateur implements UserDetails {
     private String adresse;
 
     @NotBlank(message = "Le mot de passe ne peut pas être vide")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String motDePasse;
 
     private String role; //  "ADMIN", "MEMBRE", "RBENEVOLE"
