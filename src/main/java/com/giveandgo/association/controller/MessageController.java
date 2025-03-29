@@ -2,7 +2,6 @@ package com.giveandgo.association.controller;
 
 import com.giveandgo.association.entities.Message;
 import com.giveandgo.association.service.MessageService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,8 +11,11 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/messages")
 public class MessageController {
-    @Autowired
-    private MessageService messageService;
+    private final MessageService messageService;
+
+    public MessageController(MessageService messageService) {
+        this.messageService = messageService;
+    }
 
     @PostMapping
     public Message createMessage(@RequestBody Message message) {

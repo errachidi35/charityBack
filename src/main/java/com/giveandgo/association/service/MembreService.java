@@ -2,7 +2,6 @@ package com.giveandgo.association.service;
 
 import com.giveandgo.association.entities.Membre;
 import com.giveandgo.association.repository.MembreRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,8 +9,11 @@ import java.util.Optional;
 
 @Service
 public class MembreService {
-    @Autowired
-    private MembreRepository membreRepository;
+    private final MembreRepository membreRepository;
+
+    public MembreService(MembreRepository membreRepository) {
+        this.membreRepository = membreRepository;
+    }
 
     public Membre createMembre(Membre membre) {
         return membreRepository.save(membre);

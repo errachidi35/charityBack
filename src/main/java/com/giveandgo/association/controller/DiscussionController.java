@@ -2,7 +2,6 @@ package com.giveandgo.association.controller;
 
 import com.giveandgo.association.entities.Discussion;
 import com.giveandgo.association.service.DiscussionService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,8 +11,11 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/discussions")
 public class DiscussionController {
-    @Autowired
-    private DiscussionService discussionService;
+    private final DiscussionService discussionService;
+
+    public DiscussionController(DiscussionService discussionService) {
+        this.discussionService = discussionService;
+    }
 
     @PostMapping
     public Discussion createDiscussion(@RequestBody Discussion discussion) {

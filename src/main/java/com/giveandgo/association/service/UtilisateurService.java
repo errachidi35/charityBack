@@ -13,7 +13,6 @@ import com.giveandgo.association.security.JwtUtil;
 
 import jakarta.validation.Validator;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -26,15 +25,15 @@ public class UtilisateurService {
     private final UtilisateurRepository utilisateurRepository;
     private final PasswordEncoder passwordEncoder;
     private final Validator validator; // Pour valider les contraintes
-    @Autowired
-    private MembreRepository membreRepository;
-    @Autowired
-    private JwtUtil jwtUtil;
+    private final MembreRepository membreRepository;
+    private final JwtUtil jwtUtil;
 
-    public UtilisateurService(UtilisateurRepository utilisateurRepository, PasswordEncoder passwordEncoder, Validator validator) {
+    public UtilisateurService(UtilisateurRepository utilisateurRepository, PasswordEncoder passwordEncoder, Validator validator, MembreRepository membreRepository, JwtUtil jwtUtil) {
         this.utilisateurRepository = utilisateurRepository;
         this.passwordEncoder = passwordEncoder;
         this.validator = validator;
+        this.membreRepository = membreRepository;
+        this.jwtUtil = jwtUtil;
     }
 
     public Utilisateur createUtilisateur(Utilisateur utilisateur) {

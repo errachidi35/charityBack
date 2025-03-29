@@ -2,7 +2,6 @@ package com.giveandgo.association.service;
 
 import com.giveandgo.association.entities.Benevole;
 import com.giveandgo.association.repository.BenevoleRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,8 +9,11 @@ import java.util.Optional;
 
 @Service
 public class BenevoleService {
-    @Autowired
-    private BenevoleRepository benevoleRepository;
+    private final BenevoleRepository benevoleRepository;
+
+    public BenevoleService(BenevoleRepository benevoleRepository) {
+        this.benevoleRepository = benevoleRepository;
+    }
 
     public Benevole createBenevole(Benevole benevole) {
         return benevoleRepository.save(benevole);

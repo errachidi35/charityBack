@@ -2,7 +2,6 @@ package com.giveandgo.association.controller;
 
 import com.giveandgo.association.entities.Mission;
 import com.giveandgo.association.service.MissionService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,8 +11,11 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/missions")
 public class MissionController {
-    @Autowired
-    private MissionService missionService;
+    private final MissionService missionService;
+
+    public MissionController(MissionService missionService) {
+        this.missionService = missionService;
+    }
 
     @PostMapping
     public Mission createMission(@RequestBody Mission mission) {

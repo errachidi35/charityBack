@@ -9,7 +9,6 @@ import com.giveandgo.association.service.UtilisateurService;
 import jakarta.annotation.PostConstruct;
 import jakarta.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,11 +18,14 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/admin")
 public class AdminController {
-    @Autowired
-    private AdminService adminService;
+    private final AdminService adminService;
 
-    @Autowired
-    private UtilisateurService utilisateurService;
+    private final UtilisateurService utilisateurService;
+
+    public AdminController(AdminService adminService, UtilisateurService utilisateurService) {
+        this.adminService = adminService;
+        this.utilisateurService = utilisateurService;
+    }
 
     @PostMapping
     public Admin createAdmin(@RequestBody Admin admin) {

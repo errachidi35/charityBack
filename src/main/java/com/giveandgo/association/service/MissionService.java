@@ -2,7 +2,6 @@ package com.giveandgo.association.service;
 
 import com.giveandgo.association.entities.Mission;
 import com.giveandgo.association.repository.MissionRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,8 +9,11 @@ import java.util.Optional;
 
 @Service
 public class MissionService {
-    @Autowired
-    private MissionRepository missionRepository;
+    private final MissionRepository missionRepository;
+
+    public MissionService(MissionRepository missionRepository) {
+        this.missionRepository = missionRepository;
+    }
 
     public Mission createMission(Mission mission) {
         return missionRepository.save(mission);
@@ -26,7 +28,7 @@ public class MissionService {
     }
 
     public List<Mission> getMissionsByType(String type) {
-        return missionRepository.findByType(type);
+        return missionRepository.findByTypeName(type);
     }
 
     public List<Mission> getAllMissions() {

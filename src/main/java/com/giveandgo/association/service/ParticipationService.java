@@ -2,7 +2,6 @@ package com.giveandgo.association.service;
 
 import com.giveandgo.association.entities.Participation;
 import com.giveandgo.association.repository.ParticipationRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,8 +9,11 @@ import java.util.Optional;
 
 @Service
 public class ParticipationService {
-    @Autowired
-    private ParticipationRepository participationRepository;
+    private final ParticipationRepository participationRepository;
+
+    public ParticipationService(ParticipationRepository participationRepository) {
+        this.participationRepository = participationRepository;
+    }
 
     public Participation createParticipation(Participation participation) {
         return participationRepository.save(participation);

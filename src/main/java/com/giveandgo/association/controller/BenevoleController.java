@@ -2,7 +2,6 @@ package com.giveandgo.association.controller;
 
 import com.giveandgo.association.entities.Benevole;
 import com.giveandgo.association.service.BenevoleService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,8 +11,11 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/benevoles")
 public class BenevoleController {
-    @Autowired
-    private BenevoleService benevoleService;
+    private final BenevoleService benevoleService;
+
+    public BenevoleController(BenevoleService benevoleService) {
+        this.benevoleService = benevoleService;
+    }
 
     @PostMapping
     public Benevole createBenevole(@RequestBody Benevole benevole) {

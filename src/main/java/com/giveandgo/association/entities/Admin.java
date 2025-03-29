@@ -9,11 +9,11 @@ import lombok.Setter;
 @Setter
 public class Admin extends Utilisateur {
     public Admin() {
-        setRole("ADMIN");
+        setRole("ROLE_ADMIN");
     }
 
     public Admin(String email, String motDePasse, String nom, String prenom) {
         super(email, motDePasse, nom, prenom);
-        setRole("ADMIN");
+        setRole("ROLE_ADMIN");
     }
 }

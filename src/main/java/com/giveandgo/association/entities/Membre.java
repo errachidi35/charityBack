@@ -20,12 +20,12 @@ public class Membre extends Utilisateur {
     private List<Mission> missions = new ArrayList<>();
 
     public Membre() {
-        setRole("MEMBRE");
+        setRole("ROLE_MEMBRE");
     }
 
     public Membre(String email, String motDePasse, String nom, String prenom, String roleUtilisateur, String domaine) {
         super(email, motDePasse, nom, prenom);
-        setRole("MEMBRE");
+        setRole("ROLE_MEMBRE");
         this.roleUtilisateur = roleUtilisateur;
         this.domaine = domaine;
         this.dateInscription = LocalDate.now();

@@ -6,7 +6,6 @@ import com.giveandgo.association.entities.Mission;
 import com.giveandgo.association.repository.DonRepository;
 import com.giveandgo.association.repository.MissionRepository;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -15,11 +14,14 @@ import java.util.Optional;
 
 @Service
 public class DonService {
-    @Autowired
-    private DonRepository donRepository;
+    private final DonRepository donRepository;
 
-    @Autowired
-    private MissionRepository missionRepository;
+    private final MissionRepository missionRepository;
+
+    public DonService(DonRepository donRepository, MissionRepository missionRepository) {
+        this.donRepository = donRepository;
+        this.missionRepository = missionRepository;
+    }
 
     public Don createDon(Don don) {
         return donRepository.save(don);

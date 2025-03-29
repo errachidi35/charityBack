@@ -2,7 +2,6 @@ package com.giveandgo.association.controller;
 
 import com.giveandgo.association.entities.Membre;
 import com.giveandgo.association.service.MembreService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,8 +11,11 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/membres")
 public class MembreController {
-    @Autowired
-    private MembreService membreService;
+    private final MembreService membreService;
+
+    public MembreController(MembreService membreService) {
+        this.membreService = membreService;
+    }
 
     @PostMapping
     public Membre createMembre(@RequestBody Membre membre) {
