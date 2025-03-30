@@ -3,11 +3,13 @@ package com.giveandgo.association.service;
 import com.giveandgo.association.entities.Message;
 import com.giveandgo.association.repository.MessageRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class MessageService {
     private final MessageRepository messageRepository;
 

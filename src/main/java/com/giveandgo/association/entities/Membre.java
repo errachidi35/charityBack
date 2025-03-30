@@ -1,5 +1,6 @@
 package com.giveandgo.association.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,22 +13,25 @@ import java.util.List;
 @Getter
 @Setter
 public class Membre extends Utilisateur {
-    private String roleUtilisateur; // Renommé pour éviter la confusion avec le role de sécurité
+    @JoinColumn(nullable = false)
     private String domaine;
+
     private LocalDate dateInscription;
 
-    @OneToMany(mappedBy = "responsable")
-    private List<Mission> missions = new ArrayList<>();
+    @OneToMany(mappedBy = "responsable", fetch = FetchType.EAGER)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private List<Mission> missions;
 
     public Membre() {
         setRole("ROLE_MEMBRE");
+        this.missions = new ArrayList<>();
     }
 
-    public Membre(String email, String motDePasse, String nom, String prenom, String roleUtilisateur, String domaine) {
+    public Membre(String email, String motDePasse, String nom, String prenom, String domaine) {
         super(email, motDePasse, nom, prenom);
         setRole("ROLE_MEMBRE");
-        this.roleUtilisateur = roleUtilisateur;
         this.domaine = domaine;
         this.dateInscription = LocalDate.now();
+        this.missions = new ArrayList<>();
     }
 }

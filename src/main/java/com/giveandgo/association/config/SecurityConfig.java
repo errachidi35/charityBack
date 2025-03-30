@@ -61,10 +61,10 @@ public class SecurityConfig {
                         .requestMatchers("/api/mission/all", "/api/mission/{id}", "/api/mission/type/{type}","/api/mission/donate").permitAll()
                         // Endpoints protégés
                         .requestMatchers("/api/participation/**").hasAnyRole("MEMBRE", "ADMIN")
-                        .requestMatchers("/api/mission/participate").hasAnyRole("BENEVOLE") // Seul un bénévole peut participer à une mission
+                        .requestMatchers("/api/mission/participate").hasRole("BENEVOLE") // Seul un bénévole peut participer à une mission
                         .requestMatchers("/api/discussion/**").hasAnyRole("BENEVOLE", "MEMBRE", "ADMIN")
                         .requestMatchers("/api/message/**").hasAnyRole("BENEVOLE", "MEMBRE", "ADMIN")
-                        .requestMatchers("/api/mission/**").hasAnyRole("MEMBRE", "ADMIN")
+                        .requestMatchers("/api/mission/create").hasRole("MEMBRE")
                         .requestMatchers("/api/utilisateur/**").hasRole("ADMIN")
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/membre", "/api/membre/**").hasRole("ADMIN")

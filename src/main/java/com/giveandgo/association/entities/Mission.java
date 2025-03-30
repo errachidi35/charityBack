@@ -24,17 +24,18 @@ public class Mission {
     private Integer nbParticipants;
 
     @Enumerated(EnumType.STRING)
+    @JoinColumn(name = "typeMission", nullable = false)
     private CategorieMission typeMission; // "DISALIMENT", "NETTESPPUB", "COLLECTALIMENT"
 
     @ManyToOne
-    @JoinColumn(name = "idResponsable")
+    @JoinColumn(name = "idResponsable", nullable = false)
     private Membre responsable;
 
     @OneToMany(mappedBy = "mission")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Participation> participations = new ArrayList<>();
 
-    @OneToOne(mappedBy = "mission")
+    @OneToOne(mappedBy = "mission", cascade = CascadeType.ALL)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Discussion discussion;
 
@@ -46,9 +47,9 @@ public class Mission {
         this.date = LocalDate.now();
     }
 
-    public Mission(String nom, LocalDate date, String lieu, String description, Integer nbParticipants, CategorieMission type, Membre responsable) {
+    public Mission(String nom, String lieu, String description, Integer nbParticipants, CategorieMission type, Membre responsable) {
         this.nom = nom;
-        this.date = date;
+        this.date = LocalDate.now();
         this.lieu = lieu;
         this.description = description;
         this.nbParticipants = nbParticipants;

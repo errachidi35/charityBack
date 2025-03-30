@@ -16,17 +16,19 @@ public class Message {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "idUtilisateur")
+    @JoinColumn(name = "idUtilisateur", nullable = false)
     private Utilisateur utilisateur;
 
     @ManyToOne
-    @JoinColumn(name = "idDiscussion")
+    @JoinColumn(name = "idDiscussion", nullable = false)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Discussion discussion;
 
+    @JoinColumn(nullable = false)
     private String contenu;
-    private LocalDate dateEnvoi;
 
+    @JoinColumn(nullable = false)
+    private LocalDate dateEnvoi;
 
     public Message() {
         this.dateEnvoi = LocalDate.now();

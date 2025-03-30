@@ -3,11 +3,13 @@ package com.giveandgo.association.service;
 import com.giveandgo.association.entities.Admin;
 import com.giveandgo.association.repository.AdminRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class AdminService {
     private final AdminRepository adminRepository;
 

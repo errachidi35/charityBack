@@ -15,12 +15,16 @@ public class Don {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "idMission")
+    @JoinColumn(name = "idMission", nullable = false)
     private Mission mission;
 
+    @JoinColumn(nullable = false)
     private String nomDonateur;
+    @JoinColumn(nullable = false)
     private Double montant;
+    @JoinColumn(nullable = false)
     private LocalDate date;
+    @JoinColumn(nullable = false)
     private String moyenPaiement;
 
     public Don() {

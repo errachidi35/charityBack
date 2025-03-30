@@ -16,10 +16,8 @@ public class MissionRequest {
     private String description;
 
     @NotNull(message = "Le nombre de participants est requis")
-    private Integer nbParticipants;
+    private int nbParticipants;
 
     @NotBlank(message = "Le type de mission est requis")
     private String type;
-
-    private Long responsableId; 
 }

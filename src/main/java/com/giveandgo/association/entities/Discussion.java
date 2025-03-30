@@ -18,7 +18,7 @@ public class Discussion {
     private Long id;
 
     @OneToOne
-    @JoinColumn(name = "idMission")
+    @JoinColumn(name = "idMission", nullable = false)
     private Mission mission;
 
     private LocalDate dateCreation;

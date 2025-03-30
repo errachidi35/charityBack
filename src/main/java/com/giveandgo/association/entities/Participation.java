@@ -17,13 +17,14 @@ public class Participation {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "idBenevole")
+    @JoinColumn(name = "idBenevole", nullable = false)
     private Benevole benevole;
 
     @ManyToOne
-    @JoinColumn(name = "idMission")
+    @JoinColumn(name = "idMission", nullable = false)
     private Mission mission;
 
+    @JoinColumn(nullable = false)
     private LocalDate dateInscription;
 
     public Participation(Benevole benevole, Mission mission){

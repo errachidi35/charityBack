@@ -7,12 +7,14 @@ import com.giveandgo.association.repository.DonRepository;
 import com.giveandgo.association.repository.MissionRepository;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class DonService {
     private final DonRepository donRepository;
 
