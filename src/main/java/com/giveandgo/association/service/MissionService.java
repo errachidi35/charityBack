@@ -1,5 +1,6 @@
 package com.giveandgo.association.service;
 
+import com.giveandgo.association.entities.CategorieMission;
 import com.giveandgo.association.entities.Mission;
 import com.giveandgo.association.repository.MissionRepository;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,7 @@ public class MissionService {
     }
 
     public List<Mission> getMissionsByType(String type) {
-        return missionRepository.findByTypeName(type);
+        return missionRepository.findByTypeMission(CategorieMission.valueOf(type));
     }
 
     public List<Mission> getAllMissions() {

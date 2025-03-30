@@ -1,6 +1,6 @@
 package com.giveandgo.association.controller;
 
-import com.giveandgo.association.dto.MembreRegisterRequest;
+import com.giveandgo.association.dto.MembreRegister;
 import com.giveandgo.association.entities.Admin;
 import com.giveandgo.association.entities.Membre;
 import com.giveandgo.association.service.AdminService;
@@ -27,7 +27,7 @@ public class AdminController {
         this.utilisateurService = utilisateurService;
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public Admin createAdmin(@RequestBody Admin admin) {
         return adminService.createAdmin(admin);
     }
@@ -38,7 +38,7 @@ public class AdminController {
         return admin.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<Admin> getAllAdmins() {
         return adminService.getAllAdmins();
     }
@@ -56,8 +56,8 @@ public class AdminController {
     // }
 
 
-    @PostMapping("/membres")
-    public ResponseEntity<Membre> createMembre(@Valid @RequestBody MembreRegisterRequest request) {
+    @PostMapping("/createmembre")
+    public ResponseEntity<Membre> createMembre(@Valid @RequestBody MembreRegister request) {
         Membre membre = utilisateurService.createMembreByAdmin(request);
         return ResponseEntity.ok(membre);
     }

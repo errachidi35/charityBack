@@ -2,7 +2,7 @@ package com.giveandgo.association.service;
 
 import com.giveandgo.association.dto.LoginRequest;
 import com.giveandgo.association.dto.LoginResponse;
-import com.giveandgo.association.dto.MembreRegisterRequest;
+import com.giveandgo.association.dto.MembreRegister;
 import com.giveandgo.association.dto.RegisterRequest;
 import com.giveandgo.association.entities.Benevole;
 import com.giveandgo.association.entities.Membre;
@@ -119,7 +119,7 @@ public class UtilisateurService {
     }
 
 
-    public Membre createMembreByAdmin(MembreRegisterRequest request) {
+    public Membre createMembreByAdmin(MembreRegister request) {
 
         // Créer un nouveau membre
         Membre membre = new Membre(); // Create a new Membre entity et le role est MEMBRE par défaut

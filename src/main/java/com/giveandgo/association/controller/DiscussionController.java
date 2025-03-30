@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/discussions")
+@RequestMapping("/api/discussion")
 public class DiscussionController {
     private final DiscussionService discussionService;
 
@@ -17,7 +17,7 @@ public class DiscussionController {
         this.discussionService = discussionService;
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public Discussion createDiscussion(@RequestBody Discussion discussion) {
         return discussionService.createDiscussion(discussion);
     }
@@ -34,7 +34,7 @@ public class DiscussionController {
         return discussion != null ? ResponseEntity.ok(discussion) : ResponseEntity.notFound().build();
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<Discussion> getAllDiscussions() {
         return discussionService.getAllDiscussions();
     }

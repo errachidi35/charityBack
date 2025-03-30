@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/membres")
+@RequestMapping("/api/membre")
 public class MembreController {
     private final MembreService membreService;
 
@@ -17,7 +17,7 @@ public class MembreController {
         this.membreService = membreService;
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public Membre createMembre(@RequestBody Membre membre) {
         return membreService.createMembre(membre);
     }
@@ -33,7 +33,7 @@ public class MembreController {
         return membreService.getMembresByRole(role);
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<Membre> getAllMembres() {
         return membreService.getAllMembres();
     }

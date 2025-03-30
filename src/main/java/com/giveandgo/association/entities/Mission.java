@@ -23,7 +23,7 @@ public class Mission {
     private Integer nbParticipants;
 
     @Enumerated(EnumType.STRING)
-    private CategorieMission type; // "DISALIMENT", "NETTESPPUB", "COLLECTALIMENT"
+    private CategorieMission typeMission; // "DISALIMENT", "NETTESPPUB", "COLLECTALIMENT"
 
     @ManyToOne
     @JoinColumn(name = "idResponsable")
@@ -48,7 +48,7 @@ public class Mission {
         this.lieu = lieu;
         this.description = description;
         this.nbParticipants = nbParticipants;
-        this.type = type;
+        this.typeMission = type;
         this.responsable = responsable;
     }
 }

@@ -6,6 +6,9 @@ import lombok.Data;
 
 @Data
 public class MessageRequest {
+    @NotNull(message = "L'ID de la discussion est requis")
+    private Long idDiscussion;
+
     @NotNull(message = "L'ID de l'utilisateur est requis")
     private Long idUtilisateur;
 

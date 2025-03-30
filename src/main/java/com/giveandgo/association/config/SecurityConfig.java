@@ -58,17 +58,18 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // Endpoints publics
                         .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/missions", "/api/missions/{id}").permitAll()
+                        .requestMatchers("/api/mission/all", "/api/mission/{id}", "api/mission/type/{type}","/api/mission/donate").permitAll()
                         // Endpoints protégés
-                        .requestMatchers("/api/participations/**").hasAnyRole("BENEVOLE", "MEMBRE", "ADMIN")
-                        .requestMatchers("/api/discussions/**").hasAnyRole("BENEVOLE", "MEMBRE", "ADMIN")
-                        .requestMatchers("/api/messages/**").hasAnyRole("BENEVOLE", "MEMBRE", "ADMIN")
-                        .requestMatchers("/api/missions/**").hasAnyRole("MEMBRE", "ADMIN")
-                        .requestMatchers("/api/utilisateurs/**").hasRole("ADMIN")
-                        .requestMatchers("/api/admins/**").hasRole("ADMIN")
-                        .requestMatchers("/api/membres/**").hasRole("ADMIN")
-                        .requestMatchers("/api/benevoles/**").hasRole("ADMIN")
-                        .requestMatchers("/api/dons", "/api/dons/**").hasRole("ADMIN")
+                        .requestMatchers("/api/participation/**").hasAnyRole("MEMBRE", "ADMIN")
+                        .requestMatchers("/api/mission/participate").hasAnyRole("BENEVOLE") // Seul un bénévole peut participer à une mission
+                        .requestMatchers("/api/discussion/**").hasAnyRole("BENEVOLE", "MEMBRE", "ADMIN")
+                        .requestMatchers("/api/message/**").hasAnyRole("BENEVOLE", "MEMBRE", "ADMIN")
+                        .requestMatchers("/api/mission/**").hasAnyRole("MEMBRE", "ADMIN")
+                        .requestMatchers("/api/utilisateur/**").hasRole("ADMIN")
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/api/membre", "/api/membre/**").hasRole("ADMIN")
+                        .requestMatchers("/api/benevole", "/api/benevole/**").hasRole("ADMIN")
+                        .requestMatchers("/api/don", "/api/don/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .httpBasic(httpBasic -> {})

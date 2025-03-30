@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/utilisateurs")
+@RequestMapping("/api/utilisateur")
 public class UtilisateurController {
     private final UtilisateurService utilisateurService;
 
@@ -17,7 +17,7 @@ public class UtilisateurController {
         this.utilisateurService = utilisateurService;
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public Utilisateur createUtilisateur(@RequestBody Utilisateur utilisateur) {
         return utilisateurService.createUtilisateur(utilisateur);
     }
@@ -34,7 +34,7 @@ public class UtilisateurController {
         return utilisateur != null ? ResponseEntity.ok(utilisateur) : ResponseEntity.notFound().build();
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<Utilisateur> getAllUtilisateurs() {
         return utilisateurService.getAllUtilisateurs();
     }

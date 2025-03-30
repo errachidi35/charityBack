@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/dons")
+@RequestMapping("/api/don")
 public class DonController {
     private final DonService donService;
 
@@ -17,7 +17,7 @@ public class DonController {
         this.donService = donService;
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public Don createDon(@RequestBody Don don) {
         return donService.createDon(don);
     }
@@ -33,7 +33,7 @@ public class DonController {
         return donService.getDonsByMission(idMission);
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<Don> getAllDons() {
         return donService.getAllDons();
     }

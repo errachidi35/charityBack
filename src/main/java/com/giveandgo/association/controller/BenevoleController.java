@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/benevoles")
+@RequestMapping("/api/benevole")
 public class BenevoleController {
     private final BenevoleService benevoleService;
 
@@ -17,7 +17,7 @@ public class BenevoleController {
         this.benevoleService = benevoleService;
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public Benevole createBenevole(@RequestBody Benevole benevole) {
         return benevoleService.createBenevole(benevole);
     }
@@ -33,7 +33,7 @@ public class BenevoleController {
         return benevoleService.getBenevolesByCompetence(competence);
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<Benevole> getAllBenevoles() {
         return benevoleService.getAllBenevoles();
     }

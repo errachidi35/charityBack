@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/messages")
+@RequestMapping("/api/message")
 public class MessageController {
     private final MessageService messageService;
 
@@ -17,7 +17,7 @@ public class MessageController {
         this.messageService = messageService;
     }
 
-    @PostMapping
+    @PostMapping("/send")
     public Message createMessage(@RequestBody Message message) {
         return messageService.createMessage(message);
     }
@@ -38,7 +38,7 @@ public class MessageController {
         return messageService.getMessagesByUtilisateur(idUtilisateur);
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<Message> getAllMessages() {
         return messageService.getAllMessages();
     }

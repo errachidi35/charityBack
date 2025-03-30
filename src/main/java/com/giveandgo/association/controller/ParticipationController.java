@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/participations")
+@RequestMapping("/api/participation")
 public class ParticipationController {
     private final ParticipationService participationService;
 
@@ -17,7 +17,7 @@ public class ParticipationController {
         this.participationService = participationService;
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public Participation createParticipation(@RequestBody Participation participation) {
         return participationService.createParticipation(participation);
     }
@@ -38,7 +38,7 @@ public class ParticipationController {
         return participationService.getParticipationsByMission(idMission);
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<Participation> getAllParticipations() {
         return participationService.getAllParticipations();
     }
