@@ -18,8 +18,8 @@ import javax.crypto.SecretKey;
 @Component
 public class JwtUtil {
 
-    // Durée de validité du token JWT (5 heures)
-    private final long JWT_TOKEN_VALIDITY = 5 * 60 * 60; 
+    @Value("${jwt.expiration}")
+    private long JWT_TOKEN_VALIDITY;
     // Clé secrète pour signer les tokens
     @Value("${jwt.secret}")
     private  String SECRET_KEY;

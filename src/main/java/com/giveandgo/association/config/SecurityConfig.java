@@ -58,7 +58,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // Endpoints publics
                         .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/mission/all", "/api/mission/{id}", "api/mission/type/{type}","/api/mission/donate").permitAll()
+                        .requestMatchers("/api/mission/all", "/api/mission/{id}", "/api/mission/type/{type}","/api/mission/donate").permitAll()
                         // Endpoints protégés
                         .requestMatchers("/api/participation/**").hasAnyRole("MEMBRE", "ADMIN")
                         .requestMatchers("/api/mission/participate").hasAnyRole("BENEVOLE") // Seul un bénévole peut participer à une mission

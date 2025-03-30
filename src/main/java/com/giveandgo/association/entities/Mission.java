@@ -1,5 +1,6 @@
 package com.giveandgo.association.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,12 +31,15 @@ public class Mission {
     private Membre responsable;
 
     @OneToMany(mappedBy = "mission")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Participation> participations = new ArrayList<>();
 
     @OneToOne(mappedBy = "mission")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Discussion discussion;
 
     @OneToMany(mappedBy = "mission", cascade = CascadeType.ALL)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Don> dons = new ArrayList<>();
 
     public Mission() {

@@ -49,11 +49,11 @@ public class AdminController {
         return ResponseEntity.ok().build();
     }
 
-    // @PostConstruct
-    // void populate() {
-    //     Admin admin = new Admin("admin@association.com", "$2a$10$xJcBZ6wU8lFD5OSO7UUzF.iFbi6ajGhWFJbGa2u6Jex4P.EP0k2rm", "SAMI", "Amine");
-    //     adminService.createAdmin(admin);
-    // }
+//    @PostConstruct
+//    void populate() {
+//        Admin admin = new Admin("admin@association.com", "$2a$10$xJcBZ6wU8lFD5OSO7UUzF.iFbi6ajGhWFJbGa2u6Jex4P.EP0k2rm", "SAMI", "Amine");
+//        adminService.createAdmin(admin);
+//    }
 
 
     @PostMapping("/createmembre")

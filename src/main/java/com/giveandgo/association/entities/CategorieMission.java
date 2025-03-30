@@ -4,6 +4,7 @@ public enum CategorieMission {
     DISALIMENT,
     NETTESPPUB,
     COLLECTALIMENT,
+    COLLECTEFIN,
     SOCIALE, 
     ENVIRONNEMENTALE, 
     EDUCATIVE, 

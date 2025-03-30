@@ -1,5 +1,6 @@
 package com.giveandgo.association.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,6 +16,7 @@ public class Benevole extends Utilisateur {
     private String competences;
 
     @OneToMany(mappedBy = "benevole")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Participation> participations = new ArrayList<>();
 
     public Benevole() {
