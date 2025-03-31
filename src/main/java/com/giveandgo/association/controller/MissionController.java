@@ -26,16 +26,13 @@ public class MissionController {
 
     private final DonService donService;
 
-    private final BenevoleService benevoleService;
-
     private final UtilisateurService utilisateurService;
     private final MembreRepository membreRepository;
 
-    public MissionController(MissionService missionService, DonService donService, ParticipationService participationService, BenevoleService benevoleService, MembreService membreService, UtilisateurService utilisateurService, MembreRepository membreRepository) {
+    public MissionController(MissionService missionService, DonService donService, ParticipationService participationService, MembreService membreService, UtilisateurService utilisateurService, MembreRepository membreRepository) {
         this.donService = donService;
         this.missionService = missionService;
         this.participationService = participationService;
-        this.benevoleService = benevoleService;
         this.utilisateurService = utilisateurService;
         this.membreRepository = membreRepository;
     }
@@ -54,7 +51,10 @@ public class MissionController {
     @PostMapping("/donate")
     public Don donate(@RequestBody DonRequest request) {
         Optional<Mission> mission = missionService.getMissionById(request.getMissionId());
-        Don don = new Don(mission.orElse(null), request.getNomDonateur(), request.getMontant(), request.getMoyenPaiement());
+        if (mission.isEmpty()) {
+            throw new IllegalArgumentException("Aucune mission trouvée avec l'ID : " + request.getMissionId());
+        }
+        Don don = new Don(mission.get(), request.getNomDonateur(), request.getMontant(), request.getMoyenPaiement());
         return donService.createDon(don);
     }
 
@@ -64,6 +64,7 @@ public class MissionController {
     }
 
     @PostMapping("/create")
+    @PreAuthorize("hasRole('MEMBRE')")
     public Mission createMission(@RequestBody MissionRequest request) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
@@ -79,10 +80,11 @@ public class MissionController {
     @PostMapping("/participate")
     @PreAuthorize("hasRole('BENEVOLE')")
     public Participation participate(@RequestBody ParticipationRequest request) {
-        Optional<Benevole> benevole = benevoleService.getBenevoleById(request.getIdBenevole());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        Benevole benevole = (Benevole) utilisateurService.findByEmail(email);
         Optional<Mission> mission = missionService.getMissionById(request.getIdMission());
-
-        Participation participation = new Participation(benevole.get(), mission.get());
+        Participation participation = new Participation(benevole, mission.get());
         return participationService.createParticipation(participation);
     }
 
@@ -93,7 +95,7 @@ public class MissionController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('MEMBRE')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteMission(@PathVariable Long id) {
         missionService.deleteMission(id);
         return ResponseEntity.ok().build();

@@ -35,6 +35,18 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
         LoginResponse response = utilisateurService.login(request);
+        // Authentication authentication = authenticationManager.authenticate(
+        //         new UsernamePasswordAuthenticationToken(request.getEmail(), request.getMotDePasse())
+        // );
+        // SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        // UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail());
+        // String jwt = jwtUtil.generateToken(userDetails);
+        // String refreshToken = jwtUtil.generateRefreshToken(userDetails);
+
+        // Map<String, Object> response = new HashMap<>();
+        // response.put("message", "Connexion réussie");
+        // response.put("token", jwt);
         return ResponseEntity.ok(response);
     }
 

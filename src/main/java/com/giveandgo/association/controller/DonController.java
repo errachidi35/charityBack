@@ -3,6 +3,7 @@ package com.giveandgo.association.controller;
 import com.giveandgo.association.entities.Don;
 import com.giveandgo.association.service.DonService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,6 +40,7 @@ public class DonController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteDon(@PathVariable Long id) {
         donService.deleteDon(id);
         return ResponseEntity.ok().build();

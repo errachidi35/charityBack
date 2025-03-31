@@ -7,6 +7,8 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -36,7 +38,21 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         // Vérifier si le header Authorization contient un token Bearer
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             jwt = authorizationHeader.substring(7);
-            email = jwtUtil.extractEmail(jwt);
+            try {
+                email = jwtUtil.extractEmail(jwt);
+            } catch (ExpiredJwtException e) {
+                // Gérer l'expiration du token
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.setContentType("application/json");
+                response.getWriter().write("{\"message\": \"Token JWT expiré. Veuillez vous reconnecter.\"}");
+                return;
+            } catch (JwtException e) {
+                // Gérer les autres erreurs JWT (par exemple, token invalide)
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.setContentType("application/json");
+                response.getWriter().write("{\"message\": \"Token JWT invalide.\"}");
+                return;
+            }
         }
 
         // Si l'email est extrait et qu'il n'y a pas encore d'authentification dans le contexte

@@ -3,6 +3,7 @@ package com.giveandgo.association.controller;
 import com.giveandgo.association.entities.Discussion;
 import com.giveandgo.association.service.DiscussionService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,11 +19,13 @@ public class DiscussionController {
     }
 
     @PostMapping("/create")
+    @PreAuthorize("hasRole('ADMIN')")
     public Discussion createDiscussion(@RequestBody Discussion discussion) {
         return discussionService.createDiscussion(discussion);
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Discussion> getDiscussionById(@PathVariable Long id) {
         Optional<Discussion> discussion = discussionService.getDiscussionById(id);
         return discussion.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
@@ -35,11 +38,13 @@ public class DiscussionController {
     }
 
     @GetMapping("/all")
+    @PreAuthorize("hasRole('ADMIN')")
     public List<Discussion> getAllDiscussions() {
         return discussionService.getAllDiscussions();
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteDiscussion(@PathVariable Long id) {
         discussionService.deleteDiscussion(id);
         return ResponseEntity.ok().build();

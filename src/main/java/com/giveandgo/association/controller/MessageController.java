@@ -1,8 +1,17 @@
 package com.giveandgo.association.controller;
 
+import com.giveandgo.association.dto.MessageRequest;
+import com.giveandgo.association.entities.Discussion;
 import com.giveandgo.association.entities.Message;
+import com.giveandgo.association.entities.Utilisateur;
+import com.giveandgo.association.service.DiscussionService;
 import com.giveandgo.association.service.MessageService;
+import com.giveandgo.association.service.UtilisateurService;
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,12 +22,24 @@ import java.util.Optional;
 public class MessageController {
     private final MessageService messageService;
 
-    public MessageController(MessageService messageService) {
+    private final UtilisateurService utilisateurService;
+
+    private final DiscussionService discussionService;
+
+    public MessageController(MessageService messageService, UtilisateurService utilisateurService, DiscussionService discussionService) {
         this.messageService = messageService;
+        this.utilisateurService = utilisateurService;
+        this.discussionService = discussionService;
     }
 
     @PostMapping("/send")
-    public Message createMessage(@RequestBody Message message) {
+    public Message createMessage(@RequestBody MessageRequest request) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        Utilisateur utilisateur = utilisateurService.findByEmail(email);
+        Discussion discussion = discussionService.getDiscussionById(request.getIdDiscussion())
+                .orElseThrow(() -> new RuntimeException("Discussion n'est pas trouvée"));
+        Message message = new Message(utilisateur, discussion, request.getContenu());
         return messageService.createMessage(message);
     }
 
@@ -44,6 +65,7 @@ public class MessageController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteMessage(@PathVariable Long id) {
         messageService.deleteMessage(id);
         return ResponseEntity.ok().build();

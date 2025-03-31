@@ -103,13 +103,13 @@ public class UtilisateurService {
         Utilisateur utilisateur = utilisateurRepository.findByEmail(request.getEmail());
         if (utilisateur == null) {
             System.out.println("Utilisateur non trouvé avec l'email : " + request.getEmail());
-            return new LoginResponse(null, "Utilisateur non trouvé avec l'email : " + request.getEmail(), "");
+            return new LoginResponse(-1, "Utilisateur non trouvé avec l'email : " + request.getEmail(), "");
         }
 
         // Vérifier le mot de passe
         if (!passwordEncoder.matches(request.getMotDePasse(), utilisateur.getMotDePasse())) {
             System.out.println("Mot de passe incorrect");
-            return new LoginResponse(null, "Mot de passe incorrect", "");
+            return new LoginResponse(-1, "Mot de passe incorrect", "");
         }
 
         // Déterminer le rôle en fonction du type d'utilisateur
@@ -117,7 +117,7 @@ public class UtilisateurService {
         String token = jwtUtil.generateToken(utilisateur.getEmail(), role);
 
         // Retourner une réponse de succès
-        return new LoginResponse(utilisateur.getId(), "Connexion réussie", token);
+        return new LoginResponse(1, "Connexion réussie", token);
     }
 
 

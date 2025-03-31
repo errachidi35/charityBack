@@ -4,12 +4,12 @@ import lombok.Data;
 
 @Data
 public class LoginResponse {
-    private Long userId;
+    private int code;
     private String message;
     private String token;
 
-    public LoginResponse(Long userId, String message, String token) {
-        this.userId = userId;
+    public LoginResponse(int code, String message, String token) {
+        this.code = code;
         this.message = message;
         this.token = token;
     }
