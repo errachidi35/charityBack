@@ -11,6 +11,8 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.wehelp.association.dto.RegisterResponse;
+
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -22,12 +24,14 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody RegisterRequest request) {
+    public ResponseEntity<RegisterResponse> register(@RequestBody RegisterRequest request) {
         try {
             Benevole benevole = utilisateurService.registerUser(request);
-            return ResponseEntity.ok("User registered successfully with ID: " + benevole.getId());
+            RegisterResponse okResponse = new RegisterResponse(1, "User registered successfully with ID: " + benevole.getId());
+            return ResponseEntity.ok(okResponse);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Registration failed: " + e.getMessage());
+            RegisterResponse errResponse = new RegisterResponse(-1, e.getMessage());
+            return ResponseEntity.ok(errResponse);
         }
     }
 
