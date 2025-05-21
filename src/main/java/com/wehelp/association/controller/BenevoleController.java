@@ -2,21 +2,39 @@ package com.wehelp.association.controller;
 
 import com.wehelp.association.entities.Benevole;
 import com.wehelp.association.service.BenevoleService;
+import com.wehelp.association.service.UtilisateurService;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
+
 @RestController
 @RequestMapping("/api/benevole")
 public class BenevoleController {
     private final BenevoleService benevoleService;
+    private final UtilisateurService utilisateurService;
 
-    public BenevoleController(BenevoleService benevoleService) {
+    public BenevoleController(BenevoleService benevoleService, UtilisateurService utilisateurService) {
         this.benevoleService = benevoleService;
+        this.utilisateurService = utilisateurService;
     }
+
+
+    @GetMapping("/profil")
+    @PreAuthorize("hasRole('BENEVOLE') or hasRole('MEMBRE')")
+    public ResponseEntity<Benevole> getProfil() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        Benevole benevole = (Benevole) utilisateurService.findByEmail(email);
+        return ResponseEntity.ok(benevole);
+    }
+
 
     @PostMapping("/update")
     @PreAuthorize("hasRole('BENEVOLE')")
