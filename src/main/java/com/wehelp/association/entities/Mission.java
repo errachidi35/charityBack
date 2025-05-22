@@ -20,8 +20,16 @@ public class Mission {
     private String nom;
     private LocalDate date;
     private String lieu;
+    // Mission.java
+@Column(nullable = true)
+private String subtitle;
+
     private String description;
     private Integer nbParticipants;
+    @Column(nullable = false)
+    private Double goal;
+    @Column(nullable = false)
+    private Double raised = 0.0;
 
     @Enumerated(EnumType.STRING)
     @JoinColumn(name = "typeMission", nullable = false)
@@ -47,13 +55,17 @@ public class Mission {
         this.date = LocalDate.now();
     }
 
-    public Mission(String nom, String lieu, String description, Integer nbParticipants, CategorieMission type, Membre responsable) {
-        this.nom = nom;
-        this.date = LocalDate.now();
-        this.lieu = lieu;
-        this.description = description;
-        this.nbParticipants = nbParticipants;
-        this.typeMission = type;
-        this.responsable = responsable;
-    }
+    public Mission(String nom, String lieu, String description, String subtitle, Integer nbParticipants, CategorieMission type, Membre responsable, Double goal) {
+    this.nom = nom;
+    this.date = LocalDate.now();
+    this.lieu = lieu;
+    this.description = description;
+    this.subtitle = subtitle;
+    this.nbParticipants = nbParticipants;
+    this.typeMission = type;
+    this.responsable = responsable;
+    this.goal = goal;
+    this.raised = 0.0;
+}
+
 }

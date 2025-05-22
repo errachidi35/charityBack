@@ -20,12 +20,12 @@ public class Benevole extends Utilisateur {
     private List<Participation> participations = new ArrayList<>();
 
     public Benevole() {
-        setRole("ROLE_BENEVOLE");
+        setRole("BENEVOLE");
     }
 
     public Benevole(String email, String motDePasse, String nom, String prenom, Float heuresContribuees, String competences) {
         super(email, motDePasse, nom, prenom);
-        setRole("ROLE_BENEVOLE");
+        setRole("BENEVOLE");
         this.heuresContribuees = heuresContribuees;
         this.competences = competences;
     }

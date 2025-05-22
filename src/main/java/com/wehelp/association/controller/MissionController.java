@@ -49,14 +49,22 @@ public class MissionController {
     }
 
     @PostMapping("/donate")
-    public Don donate(@RequestBody DonRequest request) {
-        Optional<Mission> mission = missionService.getMissionById(request.getMissionId());
-        if (mission.isEmpty()) {
-            throw new IllegalArgumentException("Aucune mission trouvée avec l'ID : " + request.getMissionId());
+    public ResponseEntity<Mission> donate(@RequestBody DonRequest request) {
+        Optional<Mission> missionOpt = missionService.getMissionById(request.getMissionId());
+        if (missionOpt.isEmpty()) {
+            return ResponseEntity.badRequest().build();
         }
-        Don don = new Don(mission.get(), request.getNomDonateur(), request.getMontant(), request.getMoyenPaiement());
-        return donService.createDon(don);
+
+        Mission mission = missionOpt.get();
+
+        // Création du don
+        Don don = new Don(mission, request.getNomDonateur(), request.getMontant(), request.getMoyenPaiement());
+        donService.createDon(don); // ça mettra à jour la mission.raise
+
+        // Retourne la mission mise à jour
+        return ResponseEntity.ok(missionService.getMissionById(mission.getId()).get());
     }
+
 
     @GetMapping("/type/{type}")
     public List<Mission> getMissionsByType(@PathVariable String type) {
@@ -69,7 +77,19 @@ public class MissionController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
         Membre membre = (Membre) utilisateurService.findByEmail(email);
-        Mission mission = new Mission(request.getNom(), request.getLieu(), request.getDescription(), request.getNbParticipants(), CategorieMission.valueOf(request.getType()), membre);
+// MissionController.java > createMission
+
+Mission mission = new Mission(
+    request.getNom(),
+    request.getLieu(),
+    request.getDescription(),
+    request.getSubtitle(),  // 👈 ajouté ici
+    request.getNbParticipants(),
+    CategorieMission.valueOf(request.getType()),
+    membre,
+    request.getGoal()
+);
+
         List<Mission> missions = membre.getMissions();
         missions.add(mission);
         membre.setMissions(missions);
@@ -78,7 +98,8 @@ public class MissionController {
     }
 
     @PostMapping("/participate")
-    @PreAuthorize("hasRole('BENEVOLE')")
+  @PreAuthorize("hasRole('BENEVOLE')")
+
     public Participation participate(@RequestBody ParticipationRequest request) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();

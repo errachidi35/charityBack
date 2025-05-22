@@ -9,4 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface ParticipationRepository extends JpaRepository<Participation, Long> {
     List<Participation> findByBenevoleId(Long idBenevole);
     List<Participation> findByMissionId(Long idMission);
+    boolean existsByBenevoleIdAndMissionId(Long idBenevole, Long idMission);
+
 }

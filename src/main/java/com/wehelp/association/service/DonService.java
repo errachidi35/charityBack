@@ -26,6 +26,12 @@ public class DonService {
     }
 
     public Don createDon(Don don) {
+         Mission mission = don.getMission();
+
+    // Ajoute le montant au total raised
+    mission.setRaised(mission.getRaised() + don.getMontant());
+
+    missionRepository.save(mission);
         return donRepository.save(don);
     }
 

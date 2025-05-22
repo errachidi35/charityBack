@@ -10,6 +10,7 @@ import com.wehelp.association.dto.LoginRequest;
 import com.wehelp.association.dto.LoginResponse;
 import com.wehelp.association.dto.MembreRegister;
 import com.wehelp.association.dto.RegisterRequest;
+import com.wehelp.association.entities.Admin;
 import com.wehelp.association.entities.Benevole;
 import com.wehelp.association.entities.Membre;
 import com.wehelp.association.entities.Utilisateur;
@@ -17,6 +18,7 @@ import com.wehelp.association.repository.MembreRepository;
 import com.wehelp.association.repository.UtilisateurRepository;
 import com.wehelp.association.security.JwtUtil;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -97,27 +99,44 @@ public class UtilisateurService {
         return utilisateurRepository.save(benevole);
     }
 
+ public Admin registerAdmin(String email, String motDePasse, String nom, String prenom) {
+    Admin admin = new Admin();
+    admin.setEmail(email);
+    admin.setMotDePasse(passwordEncoder.encode(motDePasse));
+    admin.setNom(nom);
+    admin.setPrenom(prenom);
+    admin.setEnabled(true);
+    admin.setAccountLocked(false);
+
+    return utilisateurRepository.save(admin);
+}
+
+
+
+    
+
+
 
     public LoginResponse login(LoginRequest request) {
         // Rechercher l'utilisateur par email
         Utilisateur utilisateur = utilisateurRepository.findByEmail(request.getEmail());
         if (utilisateur == null) {
             System.out.println("Utilisateur non trouvé avec l'email : " + request.getEmail());
-            return new LoginResponse(-1, "Utilisateur non trouvé avec l'email : " + request.getEmail(), "");
+            return new LoginResponse(-1, "Utilisateur non trouvé avec l'email : " + request.getEmail(), "",null,null);
         }
 
         // Vérifier le mot de passe
         if (!passwordEncoder.matches(request.getMotDePasse(), utilisateur.getMotDePasse())) {
             System.out.println("Mot de passe incorrect");
-            return new LoginResponse(-1, "Mot de passe incorrect", "");
+            return new LoginResponse(-1, "Mot de passe incorrect", "",null,null);
         }
 
         // Déterminer le rôle en fonction du type d'utilisateur
-        String role = utilisateur.getClass().getSimpleName().toUpperCase(); // ADMIN, MEMBRE, BENEVOLE
+        String role = utilisateur.getRole(); // directement le champ 'role' de l'utilisateur
         String token = jwtUtil.generateToken(utilisateur.getEmail(), role);
 
         // Retourner une réponse de succès
-        return new LoginResponse(1, "Connexion réussie", token);
+    return new LoginResponse(1, "Connexion réussie", token,utilisateur.getId(), utilisateur.getRole());
     }
 
 
@@ -126,11 +145,13 @@ public class UtilisateurService {
         // Créer un nouveau membre
         Membre membre = new Membre(); // Create a new Membre entity et le role est MEMBRE par défaut
         membre.setNom(request.getNom());
-        membre.setPrenom(request.getPrenom());
-        membre.setEmail(request.getEmail());
-        membre.setMotDePasse(passwordEncoder.encode(request.getMotDePasse()));
-        membre.setAdresse(request.getAdresse());
-        membre.setTelephone(request.getTelephone());
+    membre.setPrenom(request.getPrenom());
+    membre.setEmail(request.getEmail());
+    membre.setMotDePasse(passwordEncoder.encode(request.getMotDePasse()));
+    membre.setDomaine(request.getDomaine()); 
+    membre.setEnabled(true);
+    membre.setAccountLocked(false);
+    membre.setDateInscription(LocalDate.now());
 
         return membreRepository.save(membre);
     }

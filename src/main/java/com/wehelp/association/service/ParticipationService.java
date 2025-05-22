@@ -18,8 +18,19 @@ public class ParticipationService {
     }
 
     public Participation createParticipation(Participation participation) {
+        boolean exists = participationRepository.existsByBenevoleIdAndMissionId(
+            participation.getBenevole().getId(),
+            participation.getMission().getId()
+        );
+        if (exists) {
+            throw new IllegalArgumentException("Vous participez déjà à cette mission.");
+        }
         return participationRepository.save(participation);
     }
+
+public boolean hasParticipated(Long idBenevole, Long idMission) {
+    return participationRepository.existsByBenevoleIdAndMissionId(idBenevole, idMission);
+}
 
     public Optional<Participation> getParticipationById(Long id) {
         return participationRepository.findById(id);
