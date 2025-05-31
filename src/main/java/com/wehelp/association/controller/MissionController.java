@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -109,11 +110,20 @@ Mission mission = new Mission(
         return participationService.createParticipation(participation);
     }
 
+
+
+
     @GetMapping("/responsable/{idResponsable}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('MEMBRE')")
     public List<Mission> getMissionsByResponsable(@PathVariable Long idResponsable) {
         return missionService.getMissionsByResponsable(idResponsable);
     }
+
+    @GetMapping("/{id}/participants")
+@PreAuthorize("hasRole('MEMBRE') or hasRole('ADMIN')")
+public ResponseEntity<List<Participation>> getParticipationsByMission(@PathVariable Long id) {
+    return ResponseEntity.ok(participationService.getParticipationsByMission(id));
+}
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
