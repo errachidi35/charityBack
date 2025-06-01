@@ -10,6 +10,7 @@ import com.wehelp.association.dto.LoginRequest;
 import com.wehelp.association.dto.LoginResponse;
 import com.wehelp.association.dto.MembreRegister;
 import com.wehelp.association.dto.RegisterRequest;
+import com.wehelp.association.dto.UpdateBenevoleRequest;
 import com.wehelp.association.entities.Benevole;
 import com.wehelp.association.entities.Membre;
 import com.wehelp.association.entities.Utilisateur;
@@ -103,13 +104,13 @@ public class UtilisateurService {
         Utilisateur utilisateur = utilisateurRepository.findByEmail(request.getEmail());
         if (utilisateur == null) {
             System.out.println("Utilisateur non trouvé avec l'email : " + request.getEmail());
-            return new LoginResponse(-1, "Utilisateur non trouvé avec l'email : " + request.getEmail(), "");
+            return new LoginResponse(-1, "Utilisateur non trouvé avec l'email : " + request.getEmail(), "","");
         }
 
         // Vérifier le mot de passe
         if (!passwordEncoder.matches(request.getMotDePasse(), utilisateur.getMotDePasse())) {
             System.out.println("Mot de passe incorrect");
-            return new LoginResponse(-1, "Mot de passe incorrect", "");
+            return new LoginResponse(-1, "Mot de passe incorrect", "","");
         }
 
         // Déterminer le rôle en fonction du type d'utilisateur
@@ -117,8 +118,27 @@ public class UtilisateurService {
         String token = jwtUtil.generateToken(utilisateur.getEmail(), role);
 
         // Retourner une réponse de succès
-        return new LoginResponse(1, "Connexion réussie", token);
+        return new LoginResponse(1, "Connexion réussie", token, role);
     }
+
+    public Benevole updateBenevoleProfile(String email, UpdateBenevoleRequest request) {
+        Utilisateur utilisateur = utilisateurRepository.findByEmail(email);
+        if (utilisateur == null || !(utilisateur instanceof Benevole)) {
+            throw new IllegalArgumentException("Bénévole non trouvé avec l'email : " + email);
+        }
+
+        Benevole benevole = (Benevole) utilisateur;
+
+        // Mettre à jour les champs modifiables
+        benevole.setNom(request.getNom());
+        benevole.setPrenom(request.getPrenom());
+        benevole.setEmail(request.getEmail()); // Optionnel, attention si l'email est utilisé pour l'auth
+        benevole.setTelephone(request.getTelephone());
+        benevole.setAdresse(request.getAdresse());
+
+        return utilisateurRepository.save(benevole);
+}
+
 
 
     public Membre createMembreByAdmin(MembreRegister request) {

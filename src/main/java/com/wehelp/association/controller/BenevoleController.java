@@ -1,5 +1,6 @@
 package com.wehelp.association.controller;
 
+import com.wehelp.association.dto.UpdateBenevoleRequest;
 import com.wehelp.association.entities.Benevole;
 import com.wehelp.association.service.BenevoleService;
 import com.wehelp.association.service.UtilisateurService;
@@ -34,6 +35,17 @@ public class BenevoleController {
         Benevole benevole = (Benevole) utilisateurService.findByEmail(email);
         return ResponseEntity.ok(benevole);
     }
+
+    @PutMapping("/profil")
+    @PreAuthorize("hasRole('BENEVOLE') or hsRoale('MEMBRE')")
+    public ResponseEntity<?> updateProfil(@RequestBody UpdateBenevoleRequest request) {
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    String email = authentication.getName();
+
+    Benevole updated = utilisateurService.updateBenevoleProfile(email, request);
+    return ResponseEntity.ok(updated);
+}
+
 
 
     @PostMapping("/update")
