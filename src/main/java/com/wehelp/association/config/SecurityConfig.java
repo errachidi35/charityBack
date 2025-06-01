@@ -47,7 +47,8 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(request -> {
                     CorsConfiguration config = new CorsConfiguration();
                     // Limitez les origines autorisées au besoin
-                    config.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
+                    // config.setAllowedOrigins(Arrays.asList("http://localhost:8080"));
+                    config.setAllowedOrigins(List.of("http://localhost:3000"));
                     config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                     config.setAllowedHeaders(List.of("*"));
                     config.setAllowCredentials(true);
@@ -60,12 +61,15 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/mission/all", "/api/mission/{id}", "/api/mission/type/{type}","/api/mission/donate").permitAll()
                         // Endpoints protégés
-                        .requestMatchers("/api/message/send").hasAnyRole("BENEVOLE", "MEMBRE", "ADMIN")
-                        .requestMatchers("/api/message/**").hasRole("ADMIN")
+                        .requestMatchers("/api/mission/participate").hasAuthority("BENEVOLE")
+                        .requestMatchers("/api/participation/**").hasAuthority("ADMIN")
+
+                        .requestMatchers("/api/message/send").hasAnyAuthority("BENEVOLE", "MEMBRE", "ADMIN")
+                        .requestMatchers("/api/message/**").hasAuthority("ADMIN")
                         .requestMatchers("/api/utilisateur/**").hasRole("ADMIN")
-                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/api/membre", "/api/membre/**").hasRole("ADMIN")
-                        .requestMatchers("/api/don", "/api/don/**").hasRole("ADMIN")
+                        .requestMatchers("/api/admin/**").hasAuthority("ADMIN")
+                        .requestMatchers("/api/membre", "/api/membre/**").hasAuthority("ADMIN")
+                        .requestMatchers("/api/don", "/api/don/**").hasAuthority("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .httpBasic(httpBasic -> {})

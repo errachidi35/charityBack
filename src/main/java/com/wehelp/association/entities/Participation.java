@@ -8,6 +8,9 @@ import lombok.Setter;
 import java.time.LocalDate;
 
 @Entity
+@Table(name = "participation", uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"id_benevole", "id_mission"})
+})
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,7 +19,7 @@ public class Participation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idBenevole", nullable = false)
     private Benevole benevole;
 

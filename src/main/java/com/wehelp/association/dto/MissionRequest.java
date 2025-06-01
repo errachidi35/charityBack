@@ -20,4 +20,13 @@ public class MissionRequest {
 
     @NotBlank(message = "Le type de mission est requis")
     private String type;
+
+    @NotNull(message = "L'objectif de la mission est requis")
+    private double goal;
+
+    // MissionRequest.java
+@NotBlank(message = "Le sous-titre est requis")
+private String subtitle;
+
+
 }

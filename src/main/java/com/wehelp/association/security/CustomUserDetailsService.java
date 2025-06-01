@@ -31,7 +31,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         // Créer les autorités (rôles + permissions supplémentaires)
         Collection<GrantedAuthority> authorities = new ArrayList<>(utilisateur.getAuthorities());
-
+        
         // Ajouter des permissions granulaires en fonction du rôle
         switch (utilisateur.getRole()) {
             case "ADMIN":

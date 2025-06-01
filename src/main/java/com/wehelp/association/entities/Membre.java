@@ -23,13 +23,13 @@ public class Membre extends Utilisateur {
     private List<Mission> missions;
 
     public Membre() {
-        setRole("ROLE_MEMBRE");
+        setRole("MEMBRE");
         this.missions = new ArrayList<>();
     }
 
     public Membre(String email, String motDePasse, String nom, String prenom, String domaine) {
         super(email, motDePasse, nom, prenom);
-        setRole("ROLE_MEMBRE");
+        setRole("MEMBRE");
         this.domaine = domaine;
         this.dateInscription = LocalDate.now();
         this.missions = new ArrayList<>();

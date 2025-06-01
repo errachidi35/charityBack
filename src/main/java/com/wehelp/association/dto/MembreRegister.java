@@ -19,4 +19,5 @@ public class MembreRegister {
 
     private String adresse;
     private String telephone;
+        private String domaine;
 }
