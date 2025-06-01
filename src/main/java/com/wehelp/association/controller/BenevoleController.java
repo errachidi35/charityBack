@@ -37,7 +37,7 @@ public class BenevoleController {
     }
 
     @PutMapping("/profil")
-    @PreAuthorize("hasRole('BENEVOLE') or hsRoale('MEMBRE')")
+    @PreAuthorize("hasRole('BENEVOLE') or hasRole('MEMBRE')")
     public ResponseEntity<?> updateProfil(@RequestBody UpdateBenevoleRequest request) {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     String email = authentication.getName();
