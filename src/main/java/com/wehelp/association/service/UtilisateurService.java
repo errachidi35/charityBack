@@ -17,6 +17,7 @@ import com.wehelp.association.entities.Utilisateur;
 import com.wehelp.association.repository.MembreRepository;
 import com.wehelp.association.repository.UtilisateurRepository;
 import com.wehelp.association.security.JwtUtil;
+import com.wehelp.association.dto.UpdateBenevoleRequest;
 
 import java.time.LocalDate;
 import java.util.List;
