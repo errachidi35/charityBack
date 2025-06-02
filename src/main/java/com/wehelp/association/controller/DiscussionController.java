@@ -19,7 +19,7 @@ public class DiscussionController {
     }
 
     @PostMapping("/create")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public Discussion createDiscussion(@RequestBody Discussion discussion) {
         return discussionService.createDiscussion(discussion);
     }

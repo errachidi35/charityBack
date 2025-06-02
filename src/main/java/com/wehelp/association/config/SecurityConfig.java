@@ -62,10 +62,11 @@ public class SecurityConfig {
                         .requestMatchers("/api/mission/all", "/api/mission/{id}", "/api/mission/type/{type}","/api/mission/donate").permitAll()
                         // Endpoints protégés
                         .requestMatchers("/api/mission/participate").hasAuthority("BENEVOLE")
-                        .requestMatchers("/api/participation/**").hasAuthority("ADMIN")
-
+                        .requestMatchers("/api/participation/create","/api/participation/all").hasAuthority("ADMIN")
+                        .requestMatchers("/api/participation/mymissions").hasAuthority("BENEVOLE")
+                        .requestMatchers("/api/discussion/create").hasAnyAuthority("BENEVOLE", "MEMBRE", "ADMIN")
                         .requestMatchers("/api/message/send").hasAnyAuthority("BENEVOLE", "MEMBRE", "ADMIN")
-                        .requestMatchers("/api/message/**").hasAuthority("ADMIN")
+                        .requestMatchers("/api/message/**").hasAnyAuthority("BENEVOLE", "MEMBRE", "ADMIN")
                         .requestMatchers("/api/utilisateur/**").hasRole("ADMIN")
                         .requestMatchers("/api/admin/**").hasAuthority("ADMIN")
                         .requestMatchers("/api/membre", "/api/membre/**").hasAuthority("ADMIN")

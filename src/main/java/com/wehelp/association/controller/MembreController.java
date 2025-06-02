@@ -3,6 +3,7 @@ package com.wehelp.association.controller;
 import com.wehelp.association.entities.Membre;
 import com.wehelp.association.service.MembreService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public class MembreController {
     }
 
     @PostMapping("/create")
+    @PreAuthorize("hasRole('ADMIN')")
     public Membre createMembre(@RequestBody Membre membre) {
         return membreService.createMembre(membre);
     }

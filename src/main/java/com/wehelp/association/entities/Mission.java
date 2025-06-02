@@ -51,6 +51,7 @@ private String subtitle;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Don> dons = new ArrayList<>();
 
+
     public Mission() {
         this.date = LocalDate.now();
     }
